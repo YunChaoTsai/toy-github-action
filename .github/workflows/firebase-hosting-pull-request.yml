@@ -1,0 +1,63 @@
+name: on PR commented with "firebase preview"
+
+on: 
+  workflow_dispatch:
+  issue_comment:
+    types: [created, edited]
+
+env:
+  NODE_VERSION: 16
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.issue.pull_request && contains( github.event.comment.body, 'firebase-preview' ))
+    steps:
+      - name: Extracting PR route
+        if: ${{ github.event.issue.pull_request }}
+        id: extracting_route
+        run: |
+          echo "::set-output name=route::$(echo ${{ github.event.issue.pull_request.url }}  | sed s-https://api.github.com--)"
+          
+      - name: Getting PR data
+        if: ${{ github.event.issue.pull_request }}
+        id: pr_data
+        uses: octokit/request-action@v2.x
+        with:
+          route: GET ${{ steps.extracting_route.outputs.route }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Checkout PRed branch
+        uses: actions/checkout@v2
+        if: ${{ github.event.issue.pull_request }}
+        with:
+          ref: ${{ fromJson(steps.pr_data.outputs.data).head.ref }}
+
+      - name: Checkout workflow branch
+        uses: actions/checkout@v2
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+
+      - name: Set git short sha
+        id: git-short-sha
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+      - name: fake action-hosting-deploy
+        id: firebase_hosting_preview
+        run: |
+          echo "${{ steps.git-short-sha.outputs.sha_short }}"
+          echo "::set-output name=expire_time::2022-02-25T09:07:10.071800197Z"
+          echo "::set-output name=details_url::https://maac-staging-${{ steps.git-short-sha.outputs.sha_short }}.web.app/"
+
+      - name: Check outputs
+        run: |
+          echo expire_time ${{steps.firebase_hosting_preview.outputs.expire_time}}
+          echo details_url ${{steps.firebase_hosting_preview.outputs.details_url}}
+
+      - name: Create preview comment
+        uses: peter-evans/commit-comment@v1
+        with:
+          body: |
+            [<img width="306" src="https://via.placeholder.com/306x65/4585f0/FFFFFF/?text=Preview+is+ready" />](${{steps.firebase_hosting_preview.outputs.details_url}})
+
+            Preview link: ${{steps.firebase_hosting_preview.outputs.details_url}}
