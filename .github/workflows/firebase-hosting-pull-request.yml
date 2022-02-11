@@ -1,4 +1,4 @@
-name: on PR commented with "firebase preview"
+name: firebase preview
 
 on: 
   workflow_dispatch:
