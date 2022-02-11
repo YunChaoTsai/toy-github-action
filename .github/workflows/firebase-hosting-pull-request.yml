@@ -58,6 +58,7 @@ jobs:
         uses: peter-evans/commit-comment@v1
         if: ${{ github.event.issue.pull_request }}
         with:
+          sha: ${{github.event.issue.pull_request.sha}}
           body: |
             [<img width="306" src="https://via.placeholder.com/306x65/4585f0/FFFFFF/?text=Preview+is+ready" />](${{steps.firebase_hosting_preview.outputs.details_url}})
 
