@@ -58,9 +58,6 @@ jobs:
         uses: allthatjazzleo/actions-pull-request-add-comment@master
         if: github.event_name == 'issue_comment' 
         with:
-          message: "echo ${{steps.firebase_hosting_preview.outputs.details_url}}"
-          # message: |
-          #   [<img width="306" src="https://via.placeholder.com/306x65/4585f0/FFFFFF/?text=Preview+is+ready" />](${{steps.firebase_hosting_preview.outputs.details_url}})
-
-          #   Preview link: ${{steps.firebase_hosting_preview.outputs.details_url}}
+          message: |
+            [<img width="306" src="https://cdn.maac.app/pages/github/preview.png" />](${{steps.firebase_hosting_preview.outputs.details_url}})
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
