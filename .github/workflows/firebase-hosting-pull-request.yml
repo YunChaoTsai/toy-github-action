@@ -7,11 +7,12 @@ on:
 
 env:
   NODE_VERSION: 16
+  TRIGGER_KEYWORD: "firebase-preview"
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.issue.pull_request && contains( github.event.comment.body, 'firebase-preview' )) }}
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.issue.pull_request && contains( github.event.comment.body, env.TRIGGER_KEYWORD )) }}
     steps:
       - name: Extracting PR route
         if: ${{ github.event.issue.pull_request }}
