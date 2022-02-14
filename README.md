@@ -4,5 +4,5 @@ This is a toy project where I try features of github actions.
 
 ## PR preview
 
-![Preparing.png](./.github/assets/preparing.png)
-![Ready.png](./.github/assets/ready.png)
+<img src="./.github/assets/preparing.png" width="306" />
+<img src="./.github/assets/ready.png" width="306" />
