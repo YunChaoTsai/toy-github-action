@@ -43,7 +43,7 @@ jobs:
         if: github.event_name == 'issue_comment' 
         with:
           message: |
-            [<img width="306" src="./.github/assets/preparing.png" />](${{steps.firebase_hosting_preview.outputs.details_url}})
+            [<img width="306" src="https://raw.githubusercontent.com/YunChaoTsai/toy-github-action/main/.github/assets/preparing.png" />](${{steps.firebase_hosting_preview.outputs.details_url}})
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set git short sha
@@ -67,5 +67,5 @@ jobs:
         if: github.event_name == 'issue_comment' 
         with:
           message: |
-            [<img width="306" src="./.github/assets/ready.png" />](${{steps.firebase_hosting_preview.outputs.details_url}})
+            [<img width="306" src="https://raw.githubusercontent.com/YunChaoTsai/toy-github-action/main/.github/assets/ready.png" />](${{steps.firebase_hosting_preview.outputs.details_url}})
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
