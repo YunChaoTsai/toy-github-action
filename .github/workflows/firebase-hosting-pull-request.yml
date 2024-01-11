@@ -16,7 +16,7 @@ jobs:
         if: ${{ github.event.issue.pull_request }}
         id: extracting_route
         run: |
-          echo "::set-output name=route::$(echo ${{ github.event.issue.pull_request.url }}  | sed s-https://api.github.com--)"
+          echo "route=$(echo ${{ github.event.issue.pull_request.url }}  | sed s-https://api.github.com--)" >> $GITHUB_OUTPUT
 
       - name: Getting PR data
         if: ${{ github.event.issue.pull_request }}
@@ -47,14 +47,14 @@ jobs:
 
       - name: Set git short sha
         id: git-short-sha
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: fake action-hosting-deploy
         id: firebase_hosting_preview
         run: |
           echo "${{ steps.git-short-sha.outputs.sha_short }}"
-          echo "::set-output name=expire_time::2022-02-25T09:07:10.071800197Z"
-          echo "::set-output name=details_url::https://maac-staging-${{ steps.git-short-sha.outputs.sha_short }}.web.app/"
+          echo "expire_time=2022-02-25T09:07:10.071800197Z" >> $GITHUB_OUTPUT
+          echo "details_url=https://maac-staging-${{ steps.git-short-sha.outputs.sha_short }}.web.app/" >> $GITHUB_OUTPUT
 
       - name: Check outputs
         run: |
