@@ -7,7 +7,7 @@ on:
 
 env:
   NODE_VERSION: 20
-  TRIGGER_KEYWORD: "firebase-preview"
+  TRIGGER_KEYWORD: "show me the data"
 
 jobs:
   build:
