@@ -29,13 +29,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout PRed branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         if: ${{ github.event.issue.pull_request }}
         with:
           ref: ${{ fromJson(steps.pr_data.outputs.data).head.ref }}
 
       - name: Checkout workflow branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         if: ${{ github.event_name == 'workflow_dispatch' }}
 
       - name: Create preparing comment
