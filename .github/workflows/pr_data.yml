@@ -1,4 +1,4 @@
-name: firebase preview
+name: show me pr data
 
 on:
   workflow_dispatch:
@@ -17,7 +17,7 @@ jobs:
         if: ${{ github.event.issue.pull_request }}
         id: extracting_route
         run: |
-          echo "::set-output name=route::$(echo ${{ github.event.issue.pull_request.url }}  | sed s-https://api.github.com--)"
+          echo "route=$(echo ${{ github.event.issue.pull_request.url }}  | sed s-https://api.github.com--)" >> $GITHUB_OUTPUT
 
       - name: Getting PR data
         if: ${{ github.event.issue.pull_request }}
@@ -30,4 +30,4 @@ jobs:
 
       - name: Print PR data
         run: |
-          echo ${{ steps.pr_data.outputs.data }}
+          echo ${{ steps.pr_data.outputs.data.base.ref }}
