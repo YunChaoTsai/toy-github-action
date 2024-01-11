@@ -5,8 +5,7 @@ on:
     types: [created, edited]
 
 env:
-  NODE_VERSION: 16
-  TRIGGER_KEYWORD:
+  NODE_VERSION: 20
 
 jobs:
   build:
