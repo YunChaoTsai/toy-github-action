@@ -1,25 +1,24 @@
 name: firebase preview
 
-on: 
-  workflow_dispatch:
+on:
   issue_comment:
     types: [created, edited]
 
 env:
   NODE_VERSION: 16
-  TRIGGER_KEYWORD: "firebase-preview"
+  TRIGGER_KEYWORD:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.issue.pull_request && contains( github.event.comment.body, env.TRIGGER_KEYWORD )) }}
+    if: ${{ github.event.issue.pull_request && contains( github.event.comment.body, 'firebase-preview' ) }}
     steps:
       - name: Extracting PR route
         if: ${{ github.event.issue.pull_request }}
         id: extracting_route
         run: |
           echo "::set-output name=route::$(echo ${{ github.event.issue.pull_request.url }}  | sed s-https://api.github.com--)"
-          
+
       - name: Getting PR data
         if: ${{ github.event.issue.pull_request }}
         id: pr_data
@@ -28,20 +27,20 @@ jobs:
           route: GET ${{ steps.extracting_route.outputs.route }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+
       - name: Checkout PRed branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         if: ${{ github.event.issue.pull_request }}
         with:
           ref: ${{ fromJson(steps.pr_data.outputs.data).head.ref }}
 
       - name: Checkout workflow branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         if: ${{ github.event_name == 'workflow_dispatch' }}
 
       - name: Create preparing comment
         uses: allthatjazzleo/actions-pull-request-add-comment@master
-        if: github.event_name == 'issue_comment' 
+        if: github.event_name == 'issue_comment'
         with:
           message: |
             [<img width="306" src="https://raw.githubusercontent.com/YunChaoTsai/toy-github-action/main/.github/assets/preparing.png" />](${{steps.firebase_hosting_preview.outputs.details_url}})
@@ -65,7 +64,7 @@ jobs:
 
       - name: Create preview comment
         uses: allthatjazzleo/actions-pull-request-add-comment@master
-        if: github.event_name == 'issue_comment' 
+        if: github.event_name == 'issue_comment'
         with:
           message: |
             [<img width="306" src="https://raw.githubusercontent.com/YunChaoTsai/toy-github-action/main/.github/assets/ready.png" />](${{steps.firebase_hosting_preview.outputs.details_url}})
