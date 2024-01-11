@@ -30,4 +30,4 @@ jobs:
 
       - name: Print PR data
         run: |
-          echo ${{ steps.pr_data.outputs.data.base.ref }}
+          echo ${{ fromJson(steps.pr_data.outputs.data).base.ref }}
