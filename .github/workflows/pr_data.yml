@@ -1,0 +1,34 @@
+name: firebase preview
+
+on:
+  workflow_dispatch:
+  issue_comment:
+    types: [created, edited]
+
+env:
+  NODE_VERSION: 20
+  TRIGGER_KEYWORD: "firebase-preview"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.issue.pull_request && contains( github.event.comment.body, env.TRIGGER_KEYWORD )
+    steps:
+      - name: Extracting PR route
+        if: ${{ github.event.issue.pull_request }}
+        id: extracting_route
+        run: |
+          echo "::set-output name=route::$(echo ${{ github.event.issue.pull_request.url }}  | sed s-https://api.github.com--)"
+
+      - name: Getting PR data
+        if: ${{ github.event.issue.pull_request }}
+        id: pr_data
+        uses: octokit/request-action@v2.x
+        with:
+          route: GET ${{ steps.extracting_route.outputs.route }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Print PR data
+        run: |
+          echo ${{ steps.pr_data.outputs.data }}
