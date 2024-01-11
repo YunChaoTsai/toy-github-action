@@ -7,12 +7,11 @@ on:
 
 env:
   NODE_VERSION: 20
-  TRIGGER_KEYWORD: "show me the data"
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.event.issue.pull_request && contains( github.event.comment.body, env.TRIGGER_KEYWORD )
+    if: ${{ github.event.issue.pull_request && contains( github.event.comment.body, 'show me' ) }}
     steps:
       - name: Extracting PR route
         if: ${{ github.event.issue.pull_request }}
