@@ -11,11 +11,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup
-        uses: actions/setup-node@v4
-
       - name: Enable corepack
         run: corepack enable
+
+      - name: Setup
+        uses: actions/setup-node@v4
+        with:
+          cache: pnpm
+
+      - name: 
+        run: npm install -g corepack
 
       - name: Update pnpm
         run: corepack prepare pnpm@latest --activate
