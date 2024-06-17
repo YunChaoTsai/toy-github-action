@@ -1,0 +1,44 @@
+{
+  "allowCompoundWords": true,
+  "enableFiletypes": [
+    "*"
+  ],
+  "enableGlobDot": true,
+  "files": [
+    "**/*"
+  ],
+  "ignorePaths": [
+    ".*ignore",
+    "**/__snapshots__/**",
+    "**/*.svg",
+    "**/coverage/**",
+    "**/dist/**",
+    "**/node_modules/**",
+    "/.git",
+    "/.code-workspace",
+    "*/.env.*.local",
+    "*/.env.local",
+    "/pnpm-lock.yaml"
+  ],
+  "includeRegExpList": [
+    "[ -ɏ]"
+  ],
+  "useGitignore": true,
+  "version": "0.2",
+  "words": [
+    "antfu",
+    "execa",
+    "mrkdwn",
+    "npmrc",
+    "nvmrc",
+    "pathe",
+    "pnpm",
+    "rollup",
+    "stringz",
+    "tsafe",
+    "unocss",
+    "unplugin",
+    "vercel",
+    "vite",
+  ]
+}

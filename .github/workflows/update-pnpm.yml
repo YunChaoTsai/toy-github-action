@@ -1,0 +1,47 @@
+name: Annually check and update pnpm
+on:
+  workflow_dispatch:
+  schedule:
+    # run first day of the week
+    - cron: '0 0 * * 1'
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup
+        uses: actions/setup-node@v4
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Update pnpm
+        run: corepack prepare pnpm@latest --activate
+
+      - name: Check pnpm version
+        id: pnpm-version
+        run: echo "result=v$(pnpm --version)" >> $GITHUB_OUTPUT
+
+      - name: Get changed files
+        id: verify-changed-files
+        uses: tj-actions/verify-changed-files@v20
+        with:
+          files: 'package.json'
+
+      - name: Commit changes & create PR
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
+        run: |
+          git config --local user.email "yunchao@cresclab.com"
+          git config --local user.name "YunChaoTsai"
+          git checkout -b build/bump-pnpm-to-${{ steps.pnpm-version.outputs.result }}
+          git commit -am "build: update pnpm to v${{ steps.pnpm-version.outputs.result }}"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
+        with:
+          title: "build: update pnpm to v${{ steps.pnpm-version.outputs.result }}"
+          commit-message: "This PR updates pnpm to v${{ steps.pnpm-version.outputs.pnpm-version }}"
+          branch: "build/bump-pnpm-to-${{ steps.pnpm-version.outputs.result }}"

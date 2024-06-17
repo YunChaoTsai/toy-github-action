@@ -5,8 +5,8 @@ This is a toy project where I try features of github actions.
 ## Features
 
 - Using Workflow dispatch trigger github action
-
 - Using PR comment trigger trigger github action
+- Echo PR base branch name
 
 ## PR preview
 
