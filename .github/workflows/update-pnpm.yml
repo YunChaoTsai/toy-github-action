@@ -17,15 +17,16 @@ jobs:
       - name: Setup
         uses: actions/setup-node@v4
 
-      - run: pnpm -v        
+      - run: pnpm -v
 
       - name: Update pnpm
         run: corepack prepare pnpm@latest --activate
+      
+      - run: pnpm -v
 
       - name: Check pnpm version
         id: pnpm-version
-        run: 
-          pnpm -v
+        run: |
           echo "result=v$(pnpm --version)" >> $GITHUB_OUTPUT
 
       - name: Get changed files
