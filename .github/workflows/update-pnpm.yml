@@ -1,9 +1,9 @@
 name: Annually check and update pnpm
 on:
   workflow_dispatch:
-  schedule:
-    # run first day of the week
-    - cron: '0 0 * * 1'
+  # schedule:
+  #   # run first day of the week
+  #   - cron: '0 0 * * 1'
 jobs:
   update:
     runs-on: ubuntu-latest
