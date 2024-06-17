@@ -20,7 +20,7 @@ jobs:
       - run: pnpm -v
 
       - name: Update pnpm
-        run: corepack prepare pnpm@latest --activate
+        run: corepack use pnpm@latest
       
       - run: pnpm -v
 
