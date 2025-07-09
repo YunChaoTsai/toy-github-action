@@ -1,0 +1,35 @@
+name: Update PR Comment
+
+on:
+  pull_request:
+    types: [synchronize]
+
+jobs:
+  update-comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find Comment
+        uses: peter-evans/find-comment@v3
+        id: find-comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          # find comment by bot
+          comment-author: github-actions[bot]
+          body-regex: '^\s*\[Storybook\]\(https://.*?/storybook/\)\s*$'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: echo comment id
+        run: |
+          echo "Comment ID: ${{ steps.find-comment.outputs.comment-id }}"
+
+      - name: Update PR Comment
+        # if: steps.find-comment.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          edit-mode: replace
+          body: |
+            [Storybook](https://example.com/storybook/)
+            This comment has been updated.
