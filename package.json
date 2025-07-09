@@ -18,7 +18,7 @@
   },
   "packageManager": "pnpm@10.13.1+sha256.0f9ed48d808996ae007835fb5c4641cf9a300def2eddc9e957d9bbe4768c5f28",
   "engines": {
-    "node": "20",
+    "node": "24",
     "pnpm": "10"
   }
 }
