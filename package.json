@@ -8,15 +8,15 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "execa": "^9.2.0",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.7",
-    "vite": "^5.3.1",
-    "vitest": "^1.6.0"
+    "execa": "^9.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "vite": "^7.0.3",
+    "vitest": "^3.2.4"
   },
-  "packageManager": "pnpm@9.1.4+sha256.30a1801ac4e723779efed13a21f4c39f9eb6c9fbb4ced101bce06b422593d7c9",
+  "packageManager": "pnpm@10.13.1+sha256.0f9ed48d808996ae007835fb5c4641cf9a300def2eddc9e957d9bbe4768c5f28",
   "engines": {
     "node": "20",
-    "pnpm": "9"
+    "pnpm": "10"
   }
 }
