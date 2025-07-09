@@ -2,7 +2,7 @@ name: Update PR Comment
 
 on:
   pull_request:
-    types: [synchronize]
+    types: [opened, synchronize, reopened]
 
 jobs:
   update-comment:
@@ -23,7 +23,6 @@ jobs:
           echo "Comment ID: ${{ steps.find-comment.outputs.comment-id }}"
 
       - name: Update PR Comment
-        # if: steps.find-comment.outputs.comment-id != ''
         uses: peter-evans/create-or-update-comment@v3
         with:
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
@@ -32,4 +31,4 @@ jobs:
           edit-mode: replace
           body: |
             [Storybook](https://example.com/storybook/)
-            This comment has been updated.
+            ${{ steps.find-comment.outputs.comment-id }}
