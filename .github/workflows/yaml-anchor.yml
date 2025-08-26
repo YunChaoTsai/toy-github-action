@@ -1,0 +1,18 @@
+name: Try yml anchor
+
+on:
+  push:
+    paths: &storybook-paths
+      - "**.tsx"
+      - "**.ts"
+      - "src/**"
+  pull_request:
+    paths: *storybook-paths
+
+jobs:
+  update-comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo event name
+        run: |
+          echo 'Event name: ${{ github.event_name }}'
