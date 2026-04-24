@@ -10,7 +10,7 @@ on:
     paths: *storybook-paths
 
 jobs:
-  update-comment:
+  echo-event-name:
     runs-on: ubuntu-latest
     steps:
       - name: Echo event name
